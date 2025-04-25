@@ -1,0 +1,32 @@
+from flask import Flask, render_template, request, jsonify
+import random
+
+app = Flask(__MDR__)
+
+# Generate number puzzle
+def generate_numbers():
+    numbers = [random.randint(10, 99) for _ in range(10)]
+    scary_numbers = random.sample(numbers, 3)  # Mark 3 numbers as "scary"
+    return {"numbers": numbers, "scary": scary_numbers}
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+@app.route("/get_puzzle", methods=["GET"])
+def get_puzzle():
+    puzzle = generate_numbers()
+    return jsonify(puzzle)
+
+@app.route("/submit_solution", methods=["POST"])
+def submit_solution():
+    data = request.json
+    numbers = data["numbers"]
+    scary = data["scary"]
+    # Validate solution logic
+    if all(num in scary for num in numbers[:3]):  # Example logic
+        return jsonify({"success": True, "message": "You did it!"})
+    return jsonify({"success": False, "message": "Try again!"})
+
+if __name__ == "__main__":
+    app.run(debug=True)
