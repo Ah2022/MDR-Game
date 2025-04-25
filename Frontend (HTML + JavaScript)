@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive MDR Game</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #00ff00;
+            font-family: "Courier New", Courier, monospace;
+            text-align: center;
+            padding: 20px;
+        }
+        .distort {
+            animation: distort 0.5s infinite;
+        }
+        @keyframes distort {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Interactive MDR Game</h1>
+    <div id="game"></div>
+    <button onclick="startGame()">Start Game</button>
+    <script>
+        let stressLevel = 0;
+
+        function startGame() {
+            fetch("/get_puzzle")
+                .then(response => response.json())
+                .then(data => {
+                    const gameDiv = document.getElementById("game");
+                    gameDiv.innerHTML = `
+                        <p>Sort these numbers: ${data.numbers.join(", ")}</p>
+                        <input id="input" type="text" placeholder="Enter sorted numbers">
+                        <button onclick="submitSolution(${JSON.stringify(data.scary)})">Submit</button>
+                    `;
+                });
+        }
+
+        function submitSolution(scary) {
+            const input = document.getElementById("input").value.split(",").map(Number);
+            fetch("/submit_solution", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ numbers: input, scary })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (!data.success) {
+                    stressLevel += 1;
+                    document.body.classList.add("distort");
+                } else {
+                    document.body.classList.remove("distort");
+                }
+            });
+        }
+    </script>
+</body>
+</html>
