@@ -3,62 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive MDR Game</title>
+    <title>Interactive  MDR Game</title>
     <style>
         body {
-            background-color: #000;
-            color: #00ff00;
-            font-family: "Courier New", Courier, monospace;
-            text-align: center;
-            padding: 20px;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #15616d;
+            font-family: Arial, sans-serif;
         }
-        .distort {
-            animation: distort 0.5s infinite;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+            gap: 5px;
         }
-        @keyframes distort {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+        .cell {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            color: #caf0f8;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: transparent;
+            text-shadow: 0 0 5px white;
+            transition: transform 0.2s ease, font-size 0.2s ease;
+        }
+        .cell:hover {
+            transform: scale(1.5);
+            font-size: 20px;
+        }
+        .dragging {
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
-    <h1>Interactive MDR Game</h1>
-    <div id="game"></div>
-    <button onclick="startGame()">Start Game</button>
+    <div class="grid" id="grid"></div>
     <script>
-        let stressLevel = 0;
+        const gridRows = 10;
+        const gridColumns = 15;
+        const grid = document.getElementById('grid');
 
-        function startGame() {
-            fetch("/get_puzzle")
-                .then(response => response.json())
-                .then(data => {
-                    const gameDiv = document.getElementById("game");
-                    gameDiv.innerHTML = `
-                        <p>Sort these numbers: ${data.numbers.join(", ")}</p>
-                        <input id="input" type="text" placeholder="Enter sorted numbers">
-                        <button onclick="submitSolution(${JSON.stringify(data.scary)})">Submit</button>
-                    `;
-                });
+        grid.innerHTML = ''; // Clear existing grid
+
+        for (let i = 1; i <= (gridRows - 1) * gridColumns; i++) { // Remove last row
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            cell.textContent = i;
+            grid.appendChild(cell);
         }
 
-        function submitSolution(scary) {
-            const input = document.getElementById("input").value.split(",").map(Number);
-            fetch("/submit_solution", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ numbers: input, scary })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert(data.message);
-                if (!data.success) {
-                    stressLevel += 1;
-                    document.body.classList.add("distort");
-                } else {
-                    document.body.classList.remove("distort");
-                }
+        let draggedElement = null;
+
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.setAttribute('draggable', true);
+
+            cell.addEventListener('dragstart', (e) => {
+                draggedElement = e.target;
+                e.target.classList.add('dragging');
             });
-        }
+
+            cell.addEventListener('dragend', (e) => {
+                e.target.classList.remove('dragging');
+            });
+        });
     </script>
 </body>
 </html>
