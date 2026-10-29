@@ -1,5 +1,7 @@
 <p align="center"><img src="docs/images/banner.svg" alt="MDR — Macrodata Refinement. The work is mysterious and important." width="100%"></p>
 
+<p align="center"><a href="https://mdr-refinement-ah2022.ah256.chatgpt.site"><strong>▶ Play MDR online — no installation needed</strong></a></p>
+
 <p align="center">
   <a href="#begin-your-shift"><img src="https://img.shields.io/badge/Python-3.10%2B-a8d3df?style=flat-square&labelColor=102e3b" alt="Python 3.10 or newer"></a>
   <img src="https://img.shields.io/badge/Flask-3.1-a8d3df?style=flat-square&labelColor=102e3b" alt="Flask 3.1">
@@ -11,11 +13,17 @@
 
 <p align="center">An atmospheric, playable recreation inspired by the Macrodata Refinement terminals in <em>Severance</em>.<br>Twenty clusters. Five bins. One very important assignment.</p>
 
-<p align="center"><a href="#begin-your-shift">Run locally</a> · <a href="#the-work">How to play</a> · <a href="#terminal-controls">Controls</a> · <a href="#verification">Tests</a></p>
+<p align="center"><a href="https://mdr-refinement-ah2022.ah256.chatgpt.site">Play online</a> · <a href="#begin-your-shift">Run locally</a> · <a href="#the-work">How to play</a> · <a href="#terminal-controls">Controls</a> · <a href="#verification">Tests</a></p>
 
 <p align="center"><img src="docs/images/mobile.jpg" width="390" alt="The live MDR terminal on a phone-sized viewport: number field, saved progress, signal readout, and all five refinement bins"></p>
 
 > **Employee notice** — Please enjoy each number equally.
+
+## Play online
+
+**[Open the hosted game](https://mdr-refinement-ah2022.ah256.chatgpt.site)** — anyone with the link can play in a browser. No installation or account is needed.
+
+The hosted edition runs on Sites with Cloudflare Workers and D1. Progress saves per browser using an operator cookie; clearing cookies or changing browsers starts a separate session. Online and local progress are independent.
 
 ## Inside your terminal
 
@@ -28,7 +36,7 @@
 
 ## Begin your shift
 
-You need **Python 3.10+**. No Node.js build, database service, external assets, or API keys are needed to play.
+To run the Flask edition locally, you need **Python 3.10+**. No Node.js build, database service, external assets, or API keys are needed.
 
 ```sh
 git clone https://github.com/Ah2022/MDR-Game.git
@@ -98,6 +106,8 @@ The show leaves parts of refinement mysterious. The visible signal, destination 
 
 ## Your work is saved
 
+The hosted game saves progress to its cloud database. The details below describe saves in the local Flask edition.
+
 - Every accepted or rejected submission is committed to **`instance/mdr.sqlite3`**. Reloading the page or restarting the server preserves it.
 - An opaque, HttpOnly, SameSite cookie identifies your browser's operator session. Its 30-day lifetime refreshes when the terminal loads. There are no accounts or analytics.
 - Another browser, cleared cookies, or a different host (`localhost` versus `127.0.0.1`) starts a separate assignment. Use the same address to resume.
@@ -114,7 +124,7 @@ Back up the `instance/` directory if the saved work matters. Stop the server bef
 | `MDR_DATABASE` | `instance/mdr.sqlite3` | Use an absolute path to place the database on persistent storage |
 | `MDR_COOKIE_SECURE` | Off | Set to `1` over HTTPS so the operator cookie is HTTPS-only |
 
-Use a persistent local disk for SQLite. If hosting behind a proxy, configure TLS and the externally visible scheme/host consistently so origin checks work. This repository does not include a public deployment or an authentication system.
+Use a persistent local disk for SQLite. If hosting behind a proxy, configure TLS and the externally visible scheme/host consistently so origin checks work. The public hosted edition is linked above. This repository contains the local Flask edition, which does not require an authentication system.
 
 ## Project map
 
