@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071c27">
+  <meta name="description" content="An atmospheric Macrodata Refinement fan game inspired by Severance. Find the signal. Trust your instincts. Refine the file.">
+  <title>MDR — Macrodata Refinement</title>
+  <link rel="icon" href="{{ url_for('static', filename='mark.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='game.js') }}" defer></script>
+</head>
+<body>
+  <div class="workspace">
+    <header class="masthead">
+      <a class="brand" href="/" aria-label="Lumon fan project home"><img src="{{ url_for('static', filename='mark.svg') }}" width="41" height="41" alt=""><span>LUMON<small>INDUSTRIES</small></span></a>
+      <div class="department"><span class="status-dot"></span> SEVERED FLOOR <span class="slash">/</span> MDR</div>
+      <nav aria-label="Terminal controls">
+        <button id="manual-button" class="text-button">Field manual <span aria-hidden="true">↗</span></button>
+        <button id="sound-button" class="text-button" aria-pressed="false">Sound off</button>
+        <button id="motion-button" class="text-button" aria-pressed="false">Motion on</button>
+      </nav>
+    </header>
+
+    <main id="terminal" class="terminal" aria-busy="true">
+      <div class="terminal-head">
+        <div><p class="eyebrow">MACRODATA REFINEMENT <span class="version">// TERMINAL 04</span></p><h1 id="file-name">Connecting<span class="cursor">_</span></h1></div>
+        <div class="completion"><div><span class="eyebrow">FILE COMPLETION</span><strong id="progress-label">00<span>%</span></strong></div><progress id="progress" max="100" value="0" aria-label="File completion"></progress></div>
+        <div class="screen-brand" aria-hidden="true">lumon<span>◒</span></div>
+      </div>
+      <div class="field-caption"><span id="file-id">FILE — — — —</span><span>ISOLATE THE NUMBERS. TRUST THE FEELING.</span><span id="elapsed">00:00</span></div>
+      <div class="field-wrap">
+        <div id="number-field" class="number-field" role="group" aria-label="Number field. Arrow keys to move, Space to select. Select a moving group of four." aria-describedby="field-help"></div>
+        <div id="loading" class="loading"><span class="loader"></span><p>Establishing your connection.</p></div>
+        <div id="selection-count" class="selection-count" hidden>0 / 4 SELECTED</div>
+      </div>
+      <div class="signal-strip"><div><span class="signal-light" id="signal-light"></span><span class="eyebrow">SIGNAL</span><strong id="signal">Awaiting recognition</strong></div><button id="clear-button" class="screen-button" disabled>Clear selection <kbd>Esc</kbd></button></div>
+      <section id="bins" class="bins" aria-label="Refinement bins"></section>
+      <div class="terminal-foot"><span>0x <span id="coordinates">000 : 000</span></span><span>THE WORK IS MYSTERIOUS AND IMPORTANT.</span><span>MDR <span class="foot-dot">●</span> <span id="save-state">CONNECTING</span></span></div>
+    </main>
+
+    <footer class="work-footer">
+      <div><span class="tiny-label">OPERATOR GUIDANCE</span><p id="field-help">Find a moving cluster. Select its four numbers. Send it to the indicated bin.</p><p id="message" role="status" aria-live="polite">Welcome back, refiner. Your work is valued.</p></div>
+      <button id="new-button" class="new-button" disabled>Request new file <span aria-hidden="true">↗</span></button>
+    </footer>
+    <p class="fan-note">AN UNOFFICIAL SEVERANCE FAN PROJECT <span>•</span> PLEASE ENJOY EACH NUMBER EQUALLY.</p>
+  </div>
+
+  <dialog id="manual" aria-labelledby="manual-title">
+    <div class="dialog-top"><span class="tiny-label">LUMON / EMPLOYEE HANDBOOK</span><button class="close-button" data-close="manual" aria-label="Close field manual">×</button></div>
+    <h2 id="manual-title">Trust the feeling.</h2><p class="dialog-intro">Some numbers will feel different. You will know them when you see them.</p>
+    <ol class="instructions"><li><strong>Find the signal.</strong><span>Moving numbers form a group of four. Hover, tap, or focus a number to reveal its group, temper, and destination.</span></li><li><strong>Isolate the cluster.</strong><span>Click all four glowing numbers, or double-click one to select the whole group.</span></li><li><strong>Refine the file.</strong><span>Click the indicated bin, press its number key (1–5), or drag your selection into it. Every accepted group adds 5%.</span></li></ol>
+    <div class="temper-key"><span><b>WO</b> Woe</span><span><b>FC</b> Frolic</span><span><b>DR</b> Dread</span><span><b>MA</b> Malice</span></div>
+    <p class="manual-note">Each bin needs one group of each temper. Balance all five bins to complete your file. These are this fan game's playable rules.</p>
+    <div class="keyboard-note"><kbd>← ↑ ↓ →</kbd> Navigate <kbd>Space</kbd> Select <kbd>Esc</kbd> Clear</div>
+    <p class="manual-note">Progress saves automatically in this browser's operator session. Motion and sound controls are at the top of your terminal. With motion off, outlined numbers identify the clusters.</p>
+    <button class="dialog-primary" data-close="manual">Return to your important work <span>→</span></button>
+  </dialog>
+
+  <dialog id="reset-dialog" aria-labelledby="reset-title"><span class="tiny-label">REASSIGNMENT REQUEST</span><h2 id="reset-title">A fresh perspective.</h2><p>Requesting a new file replaces this file and its saved progress.</p><div class="dialog-actions"><button class="text-button" data-close="reset-dialog">Keep working</button><button id="confirm-reset" class="dialog-primary">Assign new file →</button></div></dialog>
+
+  <dialog id="complete-dialog" aria-labelledby="complete-title"><span class="tiny-label">MACRODATA REFINEMENT / QUOTA FULFILLED</span><div class="completion-seal" aria-hidden="true">100<span>%</span></div><h2 id="complete-title">Your outie is proud.</h2><p id="completion-summary">Your file has been refined. All five bins are balanced.</p><div class="dialog-actions"><button class="text-button" data-close="complete-dialog">Review terminal</button><button id="next-file" class="dialog-primary">Begin another file →</button></div></dialog>
+</body>
+</html>
