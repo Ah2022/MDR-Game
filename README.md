@@ -1,5 +1,8 @@
 <p align="center"><img src="docs/images/banner.svg" alt="MDR — Macrodata Refinement. The work is mysterious and important." width="100%"></p>
 
+<p align="center"><a href="https://mdr-refinement-ah2022.ah256.chatgpt.site"><strong>▶ Play online — no installation needed</strong></a></p>
+
+
 <p align="center">
   <a href="#begin-your-shift"><img src="https://img.shields.io/badge/Python-3.10%2B-a8d3df?style=flat-square&labelColor=102e3b" alt="Python 3.10 or newer"></a>
   <img src="https://img.shields.io/badge/Flask-3.1-a8d3df?style=flat-square&labelColor=102e3b" alt="Flask 3.1">
@@ -11,7 +14,7 @@
 
 <p align="center">An atmospheric, playable recreation inspired by the Macrodata Refinement terminals in <em>Severance</em>.<br>Twenty clusters. Five bins. One very important assignment.</p>
 
-<p align="center"><a href="#begin-your-shift">Run locally</a> · <a href="#the-work">How to play</a> · <a href="#terminal-controls">Controls</a> · <a href="#verification">Tests</a></p>
+<p align="center"><a href="https://mdr-refinement-ah2022.ah256.chatgpt.site">Play online</a> · <a href="#begin-your-shift">Run locally</a> · <a href="#the-work">How to play</a> · <a href="#terminal-controls">Controls</a> · <a href="#verification">Tests</a></p>
 
 <p align="center"><img src="docs/images/mobile.jpg" width="390" alt="The live MDR terminal on a phone-sized viewport: number field, saved progress, signal readout, and all five refinement bins"></p>
 
@@ -114,7 +117,7 @@ Back up the `instance/` directory if the saved work matters. Stop the server bef
 | `MDR_DATABASE` | `instance/mdr.sqlite3` | Use an absolute path to place the database on persistent storage |
 | `MDR_COOKIE_SECURE` | Off | Set to `1` over HTTPS so the operator cookie is HTTPS-only |
 
-Use a persistent local disk for SQLite. If hosting behind a proxy, configure TLS and the externally visible scheme/host consistently so origin checks work. This repository does not include a public deployment or an authentication system.
+Use a persistent local disk for SQLite. If hosting behind a proxy, configure TLS and the externally visible scheme/host consistently so origin checks work. The public hosted edition runs on Sites with Cloudflare Workers and D1. This repository contains the local Flask edition; hosted and local operator sessions are separate.
 
 ## Project map
 
